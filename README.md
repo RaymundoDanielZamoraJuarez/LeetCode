@@ -9,5 +9,5 @@ Incluye ejercicios prácticos de programación en distintos lenguajes como Pytho
 
 ## Autores
 - Kristian...
-- Leopoldo...
+- Leopoldo Delgadillo Silos
 - Raymundo Daniel Zamora Juárez
