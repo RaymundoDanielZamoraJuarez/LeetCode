@@ -8,6 +8,6 @@ Este repositorio fue creado como parte del assignment semanal correspondiente a 
 Incluye ejercicios prácticos de programación en distintos lenguajes como Python, Java y TypeScript, enfocados en fortalecer habilidades algorítmicas y lógicas a través de problemas seleccionados de **LeetCode**.
 
 ## Autores
-- Kristian..
+- Kristian Adrian Hernandez Cardenas
 - Leopoldo Delgadillo Silos
 - Raymundo Daniel Zamora Juárez
