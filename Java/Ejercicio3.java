@@ -6,27 +6,16 @@ class Solution {
         if(s.length() != 1) {
             for(int i = 0; i < s.length(); i++){
                 subString.add(s.charAt(i));
-                int j=subString.lastIndexOf(s.charAt(i))-1;
-                while(j != -1){
-                    if(subString.get(j) == s.charAt(i)){
-                        if(subLen>highLen){
-                            highLen=subLen;
-                        }
-                        var dupeIndex = subString.indexOf(subString.get(subLen));
-                        if(j<1){
-                            subString.remove(0);
-                            subLen--;
-                        }
-                        else{
-                            for(int k = 0; k<=dupeIndex; k++){
-                                subString.remove(0);
-                                subLen--;
-                            }
-                            break;
-                        }
+                if(subString.size()>1&&subString.indexOf(subString.get(subLen)) != subLen){
+                    if(subLen>highLen){
+                        highLen=subLen;
                     }
-                    j--;
-                }  
+                    int dupeIndex = subString.indexOf(subString.get(subLen));
+                    for(int k = 0; k<=dupeIndex; k++){
+                        subString.remove(0);
+                        subLen--;
+                    }
+                }
                 subLen++;
             }
             if(subLen>highLen){
