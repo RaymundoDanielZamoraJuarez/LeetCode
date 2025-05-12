@@ -39,9 +39,6 @@ Constraints:
 At most 2 * 105 calls will be made to get and put.
 
 """
-# Se crea la clase "Node", en la cual se guarda un par (key, value)
-# prev y next son punteros
-# Dado un nodo, nos permiten sacar o insertar en cualquier posción O(1)
 class Node:
     def __init__(self, key, value):
         self.key = key
@@ -49,29 +46,22 @@ class Node:
         self.prev = None
         self.next = None
 
-# capacity: pares MÁX que se pueden almacenar
-# cache: dict que dado un key se devuelve al nodo asociado
-# head/tail: nodos sentinela, uno detrás de otro
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.cache = {}  # clave -> nodo
-
-        # Creamos nodos fantasma para head y tail
+        self.cache = {}
         self.head = Node(0, 0)
         self.tail = Node(0, 0)
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def _remove(self, node):
-        # Elimina nodo de la lista
         prev = node.prev
         nxt = node.next
         prev.next = nxt
         nxt.prev = prev
 
     def _add_to_front(self, node):
-        # Inserta el nodo justo después de head (al frente)
         node.next = self.head.next
         node.prev = self.head
         self.head.next.prev = node
@@ -80,26 +70,23 @@ class LRUCache:
     def get(self, key: int) -> int:
         if key in self.cache:
             node = self.cache[key]
-            self._remove(node) # Se saca donde esté
-            self._add_to_front(node) # Se mete al frente
+            self._remove(node)
+            self._add_to_front(node)
             return node.value
         return -1
 
     def put(self, key: int, value: int) -> None:
         if key in self.cache:
-            self._remove(self.cache[key]) # Si ya existía, se borra
+            self._remove(self.cache[key])
 
         node = Node(key, value)
-        self.cache[key] = node # Actualiza/Agrega en el dict
-        self._add_to_front(node) # Agrega al frente
+        self.cache[key] = node
+        self._add_to_front(node)
 
         if len(self.cache) > self.capacity:
-            # Eliminar el nodo menos recientemente usado
             lru = self.tail.prev
             self._remove(lru)
             del self.cache[lru.key]
-
-#Ejemplo dado en el INPUT del problema: 
 
 if __name__ == "__main__":
     lru = LRUCache(2)

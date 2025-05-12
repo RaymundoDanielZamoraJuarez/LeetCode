@@ -38,47 +38,35 @@ Constraints:
 0 <= value <= 105
 At most 2 * 105 calls will be made to get and put.
 */
-
-
-// capacity es para ver cuántos pares MÁX guardamos
-// Usaremos un Map: esto para recordar el orden de INSERCIÒN de las claves
 class LRUCache {
-    private capacity: number;
-    private cache: Map<number, number>;
-  
-    constructor(capacity: number) { // Guarda la cpacidad, arrancamos Map vacío
-      this.capacity = capacity;
-      this.cache = new Map();
-    }
-  
-    get(key: number): number { // ¿Existe?
-      if (!this.cache.has(key)) {
-        return -1;
-      }
-      // “Refrescamos” el uso: sacamos y volvemos a meter
-      const value = this.cache.get(key)!;
-      this.cache.delete(key);
-      this.cache.set(key, value);
-      return value; // Devuelve el value
-    }
-  
-    // Actualizamos, si la clave ya está la elimina para después reinsertarla
-    // tAnmbién, si llegamos al límite de nuestro size sacamos la clave más vieja
+  private capacity: number;
+  private cache: Map<number, number>;
 
-    put(key: number, value: number): void {
-      if (this.cache.has(key)) {
-        // Si ya existe, lo sacamos primero para luego reinsertar y actualizar orden
-        this.cache.delete(key);
-      } else if (this.cache.size >= this.capacity) {
-        // Si excede capacidad, eliminamos el menos usado (el primer key en el Map)
-        const lruKey = this.cache.keys().next().value;
-        this.cache.delete(lruKey);
-      }
-      this.cache.set(key, value); // Que se quede la entrada más reciente
-    }
+  constructor(capacity: number) {
+    this.capacity = capacity;
+    this.cache = new Map();
   }
-  
-  // Ejemplo dado en el INPUT del problema: 
+
+  get(key: number): number {
+    if (!this.cache.has(key)) {
+      return -1;
+    }
+    const value = this.cache.get(key)!;
+    this.cache.delete(key);
+    this.cache.set(key, value);
+    return value;
+  }
+
+  put(key: number, value: number): void {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.capacity) {
+      const lruKey = this.cache.keys().next().value;
+      this.cache.delete(lruKey);
+    }
+    this.cache.set(key, value);
+  }
+}
 
   const lru = new LRUCache(2);
   lru.put(1, 1);            

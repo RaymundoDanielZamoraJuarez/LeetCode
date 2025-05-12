@@ -50,43 +50,34 @@ import java.util.Map;
 public class LRUCache extends LinkedHashMap<Integer, Integer> {
     private final int capacity;
 
-    // Constructor: llama a super(capacidad, factorCarga, accessOrder=true)
     public LRUCache(int capacity) {
-        super(capacity, 0.75f, true); // true = orden basado en acceso
+        super(capacity, 0.75f, true);
         this.capacity = capacity;
     }
 
-    // get: devuelve el valor o -1, y marca la entrada como reciente
     public int get(int key) {
         return super.getOrDefault(key, -1);
     }
 
-    // put: inserta o actualiza la entrada; el propio LinkedHashMap
-    // invocará removeEldestEntry tras cada put
     public void put(int key, int value) {
         super.put(key, value);
     }
 
-    /* removeEldestEntry:
-       Se invoca después de cada put(). Si retorna true,
-       elimina la entrada 'eldest' (la menos recientemente usada).
-    */
     @Override
     protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
         return size() > capacity;
     }
 
-    // Ejemplo de prueba usando el INPUT del ejercicio:
     public static void main(String[] args) {
         LRUCache lru = new LRUCache(2);
-        lru.put(1, 1);                  
-        lru.put(2, 2);                 
-        System.out.println(lru.get(1)); // 1
-        lru.put(3, 3);                  
-        System.out.println(lru.get(2)); // -1
-        lru.put(4, 4);              
-        System.out.println(lru.get(1)); // -1
-        System.out.println(lru.get(3)); //  3
-        System.out.println(lru.get(4)); //  4
+        lru.put(1, 1);
+        lru.put(2, 2);
+        System.out.println(lru.get(1));
+        lru.put(3, 3);
+        System.out.println(lru.get(2));
+        lru.put(4, 4);
+        System.out.println(lru.get(1));
+        System.out.println(lru.get(3));
+        System.out.println(lru.get(4));
     }
 }
